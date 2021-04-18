@@ -203,10 +203,9 @@ var luckyPicker = function (config, option) {
             scrollEvt :[],
         };
         var box = document.querySelector('.p-scroll-wrap');
-        box.className += ' hide';
-        setTimeout(function () {
+        if(box) {
             box.remove();
-        }, 300)
+        }
     }
 
     this.Scroll = function (el, wheel, index, opt) {
@@ -559,6 +558,7 @@ var luckyPicker = function (config, option) {
     };
 
     function init(wheels) {
+        destroy()
         //创建DOM
         createEl(wheels);
         var el = document.querySelectorAll(".p-select-item");

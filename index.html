@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <title>lucky-Picker</title>
+</head>
+<body>
+
+<div class="screen">
+</div>
+
+<script src="index.js"></script>
+<script>
+    var data = [
+                {value:0,display:'张三'},
+                {value:1,display:'李四'},
+                {value:2,display:'王二'},
+                {value:3,display:'麻子'},
+                {value:4,display:'顺五'},
+                {value:5,display:'毛六'},
+                {value:6,display:'周七'}
+
+            ]
+    const index = Math.random() * data.length >> 0;
+    new luckyPicker({
+        el: '.screen'
+    },{
+        wheels: [{
+            infinite: true,
+            selected: index,
+            data:data
+        }],
+        init: function(rs, scrollIns){
+            scrollIns.start(index)
+        },
+        end: function(rs){
+            console.log(rs)
+        }
+    });
+</script>
+</body>
+</html>

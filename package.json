@@ -1,7 +1,7 @@
 {
   "name": "lucky-picker",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.2",
+  "description": "随机选择",
   "main": "index.js",
   "scripts": {
     "build": "webpack --progress"
