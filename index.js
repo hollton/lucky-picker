@@ -291,9 +291,7 @@ var luckyPicker = function luckyPicker(config, option) {
             scrollEvt: []
         };
         var box = document.querySelector('.p-scroll-wrap');
-        if (box) {
-            box.remove();
-        }
+        box && box.remove();
     }
 
     this.Scroll = function (el, wheel, index, opt) {
@@ -368,6 +366,7 @@ var luckyPicker = function luckyPicker(config, option) {
                 }
             });
         },
+        destroy: destroy,
         itemClick: function itemClick(itemObj) {
             var self = this;
             for (var i = 0; i < itemObj.length; i++) {

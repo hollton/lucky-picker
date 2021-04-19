@@ -28,10 +28,11 @@
     },{
         wheels: [{
             infinite: true,
-            selected: index,
+            selected: 0,
             data:data
         }],
         init: function(rs, scrollIns){
+            window.scrollIns = scrollIns
             scrollIns.start(index)
         },
         end: function(rs){
