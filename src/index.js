@@ -23,7 +23,7 @@ import './css/index.less'
     return target;
 }
 
-var luckyPicker = function (config, option) {
+var LuckyPicker = function (config, option) {
     //触摸移动
     var self = this;
     var option = extend({
@@ -581,5 +581,5 @@ var luckyPicker = function (config, option) {
     init(option.wheels)
 };
 
-export default luckyPicker
-module.exports = luckyPicker;
+export default LuckyPicker;
+module.exports = LuckyPicker;

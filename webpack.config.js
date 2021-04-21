@@ -5,7 +5,7 @@ module.exports = {
     entry: './src/index.js',
     output: {
         filename: `index.js`,
-        library: 'luckyPicker',
+        library: 'LuckyPicker',
         libraryTarget: "umd"
     },
     module: {

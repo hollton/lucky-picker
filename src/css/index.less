@@ -7,10 +7,22 @@
     width: 100%;
   }
   .p-select-main {
+    position: relative;
     max-width: 456px;
     margin: 0 auto;
     overflow: hidden;
-    background: url(../img/select.png) no-repeat;
+    background: url(../img/bg-repeat.png) repeat-x;
+    &:before, &:after{
+      content: url(../img/bg-border.png);
+      width: 21px;
+      height: 144px;
+      position: absolute;
+    }
+    &:after{
+      transform:rotateY(180deg);
+      top: 0;
+      right: 0;
+    }
   }
   .p-select-body {
     position: relative;
@@ -135,11 +147,6 @@
   }
   /*center*/
   .p-center {
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    width: auto;
     .p-select-head {
       background-color: #f2f2f2;
     }
