@@ -206,11 +206,11 @@ var LuckyPicker = function (config, option) {
         box && box.remove();
     }
 
-    this.Scroll = function (el, wheel, index, opt) {
+    this.Scroll = function (el, wheel, index) {
         this.el = el;
         this.wheel = wheel;
         this.index = index;
-        this.opt = extend({
+        this.opt = {
             data: this.wheel.data,
             scrollEl2d: el.querySelector('.p-select-ul'),
             item2d: el.querySelectorAll('.p-select-ul li'),
@@ -226,8 +226,9 @@ var LuckyPicker = function (config, option) {
             transTimer: null,
             scrollTimer: null,
             clickDown: false,
-            inertia: true
-        }, opt);
+            inertia: true,
+            interactive: this.wheel.interactive
+        };
         if (option.scrollType == "3d") {
             this.opt.scrollEl3d = el.querySelector('.p-select-wheel');
             this.opt.item3d = el.querySelectorAll('.p-select-wheel li');
@@ -261,12 +262,15 @@ var LuckyPicker = function (config, option) {
                 this.itemClick(this.opt.item2d);
             }
         },
-        start: function(index){
+        start: function(index, opt = {
+            time: 5000,
+            animation: 'Quad.easeInOut'
+        }){
             var wheelData = this.wheel.data || []
             var self = this
             var lastIdx
-            var targetIndex = wheelData.length * 8 + index
-            Math.animation(0, targetIndex, 5000, 'Quad.easeInOut', function(i){
+            var targetIndex = wheelData.length * 5 + index
+            Math.animation(0, targetIndex, opt.time, opt.animation, function(i){
                 var dataIndex = parseInt(i) % wheelData.length
                 if(lastIdx === dataIndex) {
                     return

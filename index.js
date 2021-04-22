@@ -294,11 +294,11 @@ var LuckyPicker = function LuckyPicker(config, option) {
         box && box.remove();
     }
 
-    this.Scroll = function (el, wheel, index, opt) {
+    this.Scroll = function (el, wheel, index) {
         this.el = el;
         this.wheel = wheel;
         this.index = index;
-        this.opt = extend({
+        this.opt = {
             data: this.wheel.data,
             scrollEl2d: el.querySelector('.p-select-ul'),
             item2d: el.querySelectorAll('.p-select-ul li'),
@@ -314,8 +314,9 @@ var LuckyPicker = function LuckyPicker(config, option) {
             transTimer: null,
             scrollTimer: null,
             clickDown: false,
-            inertia: true
-        }, opt);
+            inertia: true,
+            interactive: this.wheel.interactive
+        };
         if (option.scrollType == "3d") {
             this.opt.scrollEl3d = el.querySelector('.p-select-wheel');
             this.opt.item3d = el.querySelectorAll('.p-select-wheel li');
@@ -350,11 +351,16 @@ var LuckyPicker = function LuckyPicker(config, option) {
             }
         },
         start: function start(index) {
+            var opt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
+                time: 5000,
+                animation: 'Quad.easeInOut'
+            };
+
             var wheelData = this.wheel.data || [];
             var self = this;
             var lastIdx;
-            var targetIndex = wheelData.length * 8 + index;
-            Math.animation(0, targetIndex, 5000, 'Quad.easeInOut', function (i) {
+            var targetIndex = wheelData.length * 5 + index;
+            Math.animation(0, targetIndex, opt.time, opt.animation, function (i) {
                 var dataIndex = parseInt(i) % wheelData.length;
                 if (lastIdx === dataIndex) {
                     return;
@@ -1312,7 +1318,7 @@ exports = ___CSS_LOADER_API_IMPORT___(false);
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
 var ___CSS_LOADER_URL_REPLACEMENT_1___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_1___);
 // Module
-exports.push([module.i, "* {\n  margin: 0;\n  padding: 0;\n}\n.p-scroll-wrap {\n  font-size: 14px;\n  width: 100%;\n}\n.p-select-main {\n  position: relative;\n  max-width: 456px;\n  margin: 0 auto;\n  overflow: hidden;\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") repeat-x;\n}\n.p-select-main:before,\n.p-select-main:after {\n  content: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n  width: 21px;\n  height: 144px;\n  position: absolute;\n  top: 0;\n  z-index: 3;\n}\n.p-select-main:before {\n  left: 0;\n}\n.p-select-main:after {\n  transform: rotateY(180deg);\n  right: 0;\n}\n.p-select-body {\n  position: relative;\n  margin: 20px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  overflow: hidden;\n  box-sizing: border-box;\n}\n.p-select-body ul {\n  list-style-type: none;\n}\n.p-select-item {\n  position: relative;\n  display: flex;\n  align-items: center;\n  height: 104px;\n  text-align: center;\n  overflow: hidden;\n}\n.p-select-col {\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n.p-select-ul {\n  margin: 0;\n  padding: 0;\n  position: relative;\n}\n.p-select-list,\n.p-select-wheel,\n.p-select-line {\n  position: absolute;\n  top: 50%;\n  left: 0;\n  right: 0;\n  height: 34px;\n  margin-top: -18px;\n  box-sizing: border-box;\n  transition: all 0.3s;\n}\n.p-select-wheel {\n  padding: 0;\n  transform-style: preserve-3d;\n  height: 34px;\n  z-index: 1;\n}\n.p-select-wheel > li {\n  backface-visibility: hidden;\n  position: absolute;\n  top: 0;\n  color: #a3a6b3;\n}\n.p-select-wheel > li.visible {\n  display: list-item;\n}\n.p-select-list {\n  position: relative;\n  z-index: 2;\n}\n.p-select-line {\n  height: 34px;\n  z-index: 100;\n  pointer-events: none;\n  box-sizing: border-box;\n  padding: 0 5px;\n}\n.p-select-label {\n  margin: 0 -5px;\n  min-width: 10px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  box-sizing: border-box;\n  white-space: nowrap;\n  z-index: 100;\n  color: #666;\n}\n.p-select-label span {\n  display: block;\n  position: relative;\n  top: -3px;\n  font-size: 22px;\n  font-weight: normal;\n  text-align: center;\n  z-index: 50;\n}\n.p-select-ul > li,\n.p-select-wheel > li {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  width: 100%;\n  padding: 0 12px;\n  line-height: 34px;\n  font-size: 14px;\n  color: #a3a6b3;\n  box-sizing: border-box;\n  cursor: pointer;\n  text-align: center;\n  user-select: none;\n}\n/*is3d*/\n.p-select-wrap.p-3d .p-select-list {\n  height: 34px;\n  overflow: hidden;\n  background-color: #fff;\n}\n.p-select-wrap.p-3d .p-select-ul > li,\n.p-select-wrap.p-3d .p-select-label {\n  color: #333333;\n  font-size: 16px;\n  font-weight: bold;\n}\n/*center*/\n.p-center .p-select-head {\n  background-color: #f2f2f2;\n}\n.triangle {\n  width: 0;\n  height: 0;\n  border-style: solid;\n  position: relative;\n  top: calc(50% - 4px);\n}\n.triangle.triangle-right {\n  border-color: transparent transparent transparent #333333;\n  border-width: 4px 0 4px 6.9px;\n  float: left;\n}\n.triangle.triangle-left {\n  border-color: transparent #333333 transparent transparent;\n  border-width: 4px 6.9px 4px 0;\n  float: right;\n}\n", ""]);
+exports.push([module.i, "* {\n  margin: 0;\n  padding: 0;\n}\n.p-scroll-wrap {\n  font-size: 14px;\n  width: 100%;\n}\n.p-select-main {\n  position: relative;\n  max-width: 456px;\n  margin: 0 auto;\n  overflow: hidden;\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") repeat-x;\n}\n.p-select-main:before,\n.p-select-main:after {\n  content: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n  width: 21px;\n  height: 144px;\n  position: absolute;\n  top: 0;\n  z-index: 3;\n}\n.p-select-main:before {\n  left: 0;\n}\n.p-select-main:after {\n  transform: rotateY(180deg);\n  right: 0;\n}\n.p-select-body {\n  position: relative;\n  margin: 20px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  overflow: hidden;\n  box-sizing: border-box;\n}\n.p-select-body ul {\n  list-style-type: none;\n}\n.p-select-item {\n  position: relative;\n  display: flex;\n  align-items: center;\n  height: 104px;\n  text-align: center;\n  overflow: hidden;\n}\n.p-select-col {\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n.p-select-ul {\n  margin: 0;\n  padding: 0;\n  position: relative;\n}\n.p-select-list,\n.p-select-wheel,\n.p-select-line {\n  position: absolute;\n  top: 50%;\n  left: 0;\n  right: 0;\n  height: 34px;\n  margin-top: -18px;\n  box-sizing: border-box;\n  transition: all 0.3s;\n}\n.p-select-wheel {\n  padding: 0;\n  transform-style: preserve-3d;\n  height: 34px;\n  z-index: 1;\n}\n.p-select-wheel > li {\n  backface-visibility: hidden;\n  position: absolute;\n  top: 0;\n  color: #a3a6b3;\n}\n.p-select-wheel > li.visible {\n  display: list-item;\n}\n.p-select-list {\n  position: relative;\n  z-index: 2;\n}\n.p-select-line {\n  height: 34px;\n  z-index: 100;\n  pointer-events: none;\n  box-sizing: border-box;\n  padding: 0 5px;\n}\n.p-select-label {\n  margin: 0 -5px;\n  min-width: 10px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  box-sizing: border-box;\n  white-space: nowrap;\n  z-index: 100;\n  color: #666;\n}\n.p-select-label span {\n  display: block;\n  position: relative;\n  top: -3px;\n  font-size: 22px;\n  font-weight: normal;\n  text-align: center;\n  z-index: 50;\n}\n.p-select-ul > li,\n.p-select-wheel > li {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  width: 100%;\n  padding: 0 12px;\n  line-height: 34px;\n  font-size: 14px;\n  color: #a3a6b3;\n  box-sizing: border-box;\n  text-align: center;\n  user-select: none;\n}\n/*is3d*/\n.p-select-wrap.p-3d .p-select-list {\n  height: 34px;\n  overflow: hidden;\n  background-color: #fff;\n}\n.p-select-wrap.p-3d .p-select-ul > li,\n.p-select-wrap.p-3d .p-select-label {\n  color: #333333;\n  font-size: 16px;\n  font-weight: bold;\n}\n/*center*/\n.p-center .p-select-head {\n  background-color: #f2f2f2;\n}\n.triangle {\n  width: 0;\n  height: 0;\n  border-style: solid;\n  position: relative;\n  top: calc(50% - 4px);\n}\n.triangle.triangle-right {\n  border-color: transparent transparent transparent #333333;\n  border-width: 4px 0 4px 6.9px;\n  float: left;\n}\n.triangle.triangle-left {\n  border-color: transparent #333333 transparent transparent;\n  border-width: 4px 6.9px 4px 0;\n  float: right;\n}\n", ""]);
 // Exports
 module.exports = exports;
 

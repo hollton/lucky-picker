@@ -29,11 +29,14 @@
         wheels: [{
             infinite: true,
             selected: 0,
-            data:data
+            data:data,
+            interactive: true
         }],
         init: function(rs, scrollIns){
             window.scrollIns = scrollIns
-            scrollIns.start(index)
+            scrollIns.start(index, {
+                time: 4000
+            })
         },
         end: function(rs){
             console.log(rs)
