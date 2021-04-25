@@ -1,5 +1,4 @@
-const path = require('path')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const LessPluginAutoPrefix = require('less-plugin-autoprefix');
 
 module.exports = {
     entry: './src/index.js',
@@ -22,7 +21,9 @@ module.exports = {
                 {
                     loader: 'less-loader',
                     options: {
-                        strictMath: true
+                        plugins: [
+                            new LessPluginAutoPrefix()
+                        ]
                     }
                 }
             ]
@@ -30,8 +31,5 @@ module.exports = {
             test:/\.(jpg|png|gif|bmp|jpeg)$/,
             use:'url-loader'
         }]
-    },
-    plugins: [
-        new CleanWebpackPlugin(['dist'])
-    ]
+    }
 }

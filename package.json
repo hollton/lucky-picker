@@ -1,6 +1,6 @@
 {
   "name": "lucky-picker",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "随机选择",
   "main": "index.js",
   "scripts": {
@@ -25,6 +25,7 @@
     "css-loader": "^3.6.0",
     "less": "^4.1.1",
     "less-loader": "^5.0.0",
+    "less-plugin-autoprefix": "^2.0.0",
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1",
     "webpack": "^3.5.3"
