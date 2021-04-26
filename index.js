@@ -350,12 +350,11 @@ var LuckyPicker = function LuckyPicker(config, option) {
                 this.itemClick(this.opt.item2d);
             }
         },
-        start: function start(index) {
-            var opt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
+        start: function start(index, opt) {
+            opt = extend({
                 time: 5000,
                 animation: 'Quad.easeInOut'
-            };
-
+            }, opt);
             var wheelData = this.wheel.data || [];
             var self = this;
             var lastIdx;
