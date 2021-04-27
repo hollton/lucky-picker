@@ -48,9 +48,9 @@ var LuckyPicker = function (config, option) {
             width: 456,
             height: 144
         }
-        if(config.autoScale) {
+        if(node && config.autoScale) {
             var [scaleWidth, scaleHeight] = [elContainer.clientWidth / wrapBox.width, elContainer.clientHeight / wrapBox.height];
-            var scaleSize = scaleWidth < scaleHeight ? scaleWidth : scaleHeight;
+            var scaleSize = scaleWidth < scaleHeight ? scaleWidth : scaleHeight || 1;
             node.style['transform'] = 'scale(' + scaleSize + ')';
             if(config.scaleOrigin) {
                 node.style['transform-origin'] = config.scaleOrigin
@@ -204,8 +204,9 @@ var LuckyPicker = function (config, option) {
         rs = {
             result: []
         };
-        var box = document.querySelector('.' + wrapClassName);
-        box && box.remove();
+        var wrapDom = document.querySelector('.' + wrapClassName);
+        wrapDom && wrapDom.remove();
+        window.removeEventListener('resize', setScale);
     }
 
     this.Scroll = function (el, wheel, index) {
@@ -578,10 +579,14 @@ var LuckyPicker = function (config, option) {
         var res = getVal(scroll.opt.scrollY, scroll.opt.data, scroll.opt.infinite, scroll.opt.selectedIdx);
         rs.result.push(res);
         //传出初始结果
-        option.init(rs, scroll);
-        document.querySelector('.' + wrapClassName).addEventListener('touchmove', function (e) {
+        option.init(scroll, rs);
+        var wrapDom = document.querySelector('.' + wrapClassName);
+        wrapDom.addEventListener('touchmove', function (e) {
             e.preventDefault()
         }, false);
+        window.addEventListener('resize', function(){
+            setScale(wrapDom)
+        })
     }
 
     init(option.wheel)

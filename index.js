@@ -140,7 +140,7 @@ var LuckyPicker = function LuckyPicker(config, option) {
             var scaleWidth = elContainer.clientWidth / wrapBox.width,
                 scaleHeight = elContainer.clientHeight / wrapBox.height;
 
-            var scaleSize = scaleWidth < scaleHeight ? scaleWidth : scaleHeight;
+            var scaleSize = scaleWidth < scaleHeight ? scaleWidth : scaleHeight || 1;
             node.style['transform'] = 'scale(' + scaleSize + ')';
             if (config.scaleOrigin) {
                 node.style['transform-origin'] = config.scaleOrigin;
@@ -278,8 +278,11 @@ var LuckyPicker = function LuckyPicker(config, option) {
         rs = {
             result: []
         };
-        var box = document.querySelector('.' + wrapClassName);
-        box && box.remove();
+        var wrapDom = document.querySelector('.' + wrapClassName);
+        if (wrapDom) {
+            wrapDom.remove();
+            window.removeEventListener('resize', setScale);
+        }
     }
 
     this.Scroll = function (el, wheel, index) {
@@ -656,10 +659,17 @@ var LuckyPicker = function LuckyPicker(config, option) {
         var res = getVal(scroll.opt.scrollY, scroll.opt.data, scroll.opt.infinite, scroll.opt.selectedIdx);
         rs.result.push(res);
         //传出初始结果
-        option.init(rs, scroll);
-        document.querySelector('.' + wrapClassName).addEventListener('touchmove', function (e) {
+        option.init(scroll, rs);
+        var wrapDom = document.querySelector('.' + wrapClassName);
+        wrapDom.addEventListener('touchmove', function (e) {
             e.preventDefault();
         }, false);
+        wrapDom.addEventListener('resize', function (e) {
+            e.preventDefault();
+        }, false);
+        window.addEventListener('resize', function () {
+            setScale(wrapDom);
+        });
     }
 
     init(option.wheel);
@@ -1310,7 +1320,7 @@ exports = ___CSS_LOADER_API_IMPORT___(false);
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
 var ___CSS_LOADER_URL_REPLACEMENT_1___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_1___);
 // Module
-exports.push([module.i, ".p-scroll-wrap {\n  font-size: 14px;\n  width: 456px;\n  height: 144px;\n  transform: scale(1);\n  transform-origin: 0 0;\n}\n.p-select-main {\n  position: relative;\n  height: 100%;\n  margin: 0 auto;\n  overflow: hidden;\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") repeat-x;\n}\n.p-select-main:before,\n.p-select-main:after {\n  content: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n  position: absolute;\n  top: 0;\n  z-index: 3;\n}\n.p-select-main:before {\n  left: 0;\n}\n.p-select-main:after {\n  transform: rotateY(180deg);\n  right: 0;\n}\n.p-select-main .p-select-body {\n  position: relative;\n  height: 100%;\n  margin: 0 20px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  overflow: hidden;\n  box-sizing: border-box;\n}\n.p-select-main .p-select-body ul {\n  list-style-type: none;\n}\n.p-select-main .p-select-body .p-select-line {\n  z-index: 100;\n  pointer-events: none;\n  padding: 0 5px;\n}\n.p-select-main .p-select-body .p-select-item {\n  position: relative;\n  display: flex;\n  align-items: center;\n  height: 104px;\n  text-align: center;\n  overflow: hidden;\n}\n.p-select-main .p-select-body .p-select-item .p-select-col {\n  position: relative;\n  width: 100%;\n  height: 100%;\n}\n.p-select-list,\n.p-select-wheel,\n.p-select-line {\n  position: absolute;\n  top: 50%;\n  left: 0;\n  right: 0;\n  height: 34px;\n  margin-top: -18px;\n  box-sizing: border-box;\n  transition: all 0.3s;\n}\n.p-select-wheel {\n  padding: 0;\n  transform-style: preserve-3d;\n  height: 34px;\n  z-index: 1;\n}\n.p-select-wheel > li {\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  position: absolute;\n  top: 0;\n  color: #a3a6b3;\n}\n.p-select-wheel > li.visible {\n  display: list-item;\n}\n.p-select-ul > li,\n.p-select-wheel > li {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  width: 100%;\n  padding: 0 12px;\n  line-height: 34px;\n  font-size: 14px;\n  color: #a3a6b3;\n  box-sizing: border-box;\n  text-align: center;\n  -webkit-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.p-select-list {\n  position: relative;\n  z-index: 2;\n  height: 34px;\n  overflow: hidden;\n  background-color: #fff;\n}\n.p-select-list .p-select-ul {\n  margin: 0;\n  padding: 0;\n  position: relative;\n}\n.p-select-list .p-select-ul > li {\n  color: #333333;\n  font-size: 16px;\n  font-weight: bold;\n}\n.triangle {\n  width: 0;\n  height: 0;\n  border-style: solid;\n  position: relative;\n  top: calc(50% - 4px);\n}\n.triangle.triangle-right {\n  border-color: transparent transparent transparent #333333;\n  border-width: 4px 0 4px 6.9px;\n  float: left;\n}\n.triangle.triangle-left {\n  border-color: transparent #333333 transparent transparent;\n  border-width: 4px 6.9px 4px 0;\n  float: right;\n}\n", ""]);
+exports.push([module.i, ".p-scroll-wrap {\n  font-size: 14px;\n  max-width: 456px;\n  height: 144px;\n  transform: scale(1);\n  margin: 0 auto;\n  position: relative;\n  top: calc(50% - 72px);\n}\n.p-select-main {\n  position: relative;\n  height: 100%;\n  margin: 0 auto;\n  overflow: hidden;\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") repeat-x;\n}\n.p-select-main:before,\n.p-select-main:after {\n  content: '';\n  position: absolute;\n  top: 0;\n  z-index: 3;\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n  width: 21px;\n  height: 144px;\n}\n.p-select-main:before {\n  left: 0;\n}\n.p-select-main:after {\n  transform: rotateY(180deg);\n  right: 0;\n}\n.p-select-main .p-select-body {\n  position: relative;\n  height: 100%;\n  margin: 0 20px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  overflow: hidden;\n  box-sizing: border-box;\n}\n.p-select-main .p-select-body ul {\n  list-style-type: none;\n}\n.p-select-main .p-select-body .p-select-line {\n  z-index: 100;\n  pointer-events: none;\n  padding: 0 5px;\n}\n.p-select-main .p-select-body .p-select-item {\n  position: relative;\n  display: flex;\n  align-items: center;\n  height: 104px;\n  width: 390px;\n  text-align: center;\n  overflow: hidden;\n}\n.p-select-main .p-select-body .p-select-item .p-select-col {\n  position: relative;\n  width: 100%;\n  height: 100%;\n}\n.p-select-list,\n.p-select-wheel,\n.p-select-line {\n  position: absolute;\n  top: 50%;\n  left: 0;\n  right: 0;\n  height: 34px;\n  margin-top: -18px;\n  box-sizing: border-box;\n  transition: all 0.3s;\n}\n.p-select-wheel {\n  padding: 0;\n  transform-style: preserve-3d;\n  height: 34px;\n  z-index: 1;\n}\n.p-select-wheel > li {\n  -webkit-backface-visibility: hidden;\n          backface-visibility: hidden;\n  position: absolute;\n  top: 0;\n  color: #a3a6b3;\n}\n.p-select-wheel > li.visible {\n  display: list-item;\n}\n.p-select-ul > li,\n.p-select-wheel > li {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  width: 100%;\n  padding: 0 12px;\n  line-height: 34px;\n  font-size: 14px;\n  color: #a3a6b3;\n  box-sizing: border-box;\n  text-align: center;\n  -webkit-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.p-select-list {\n  position: relative;\n  z-index: 2;\n  height: 34px;\n  overflow: hidden;\n  background-color: #fff;\n}\n.p-select-list .p-select-ul {\n  margin: 0;\n  padding: 0;\n  position: relative;\n}\n.p-select-list .p-select-ul > li {\n  color: #333333;\n  font-size: 16px;\n  font-weight: bold;\n}\n.triangle {\n  width: 0;\n  height: 0;\n  border-style: solid;\n  position: relative;\n  top: calc(50% - 4px);\n}\n.triangle.triangle-right {\n  border-color: transparent transparent transparent #333333;\n  border-width: 4px 0 4px 6.9px;\n  float: left;\n}\n.triangle.triangle-left {\n  border-color: transparent #333333 transparent transparent;\n  border-width: 4px 6.9px 4px 0;\n  float: right;\n}\n", ""]);
 // Exports
 module.exports = exports;
 

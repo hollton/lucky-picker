@@ -1,9 +1,11 @@
 .p-scroll-wrap {
     font-size: 14px;
-    width: 456px;
+    max-width: 456px;
     height: 144px;
     transform: scale(1);
-    transform-origin: 0 0;
+    margin: 0 auto;
+    position: relative;
+    top: calc(50% - 72px);
   }
   .p-select-main {
     position: relative;
@@ -12,10 +14,13 @@
     overflow: hidden;
     background: url(../img/bg-repeat.png) repeat-x;
     &:before, &:after{
-      content: url(../img/bg-border.png);
+      content: '';
       position: absolute;
       top: 0;
       z-index: 3;
+      background: url(../img/bg-border.png);
+      width: 21px;
+      height: 144px;
     }
     &:before{
       left: 0;
@@ -46,6 +51,7 @@
         display: flex;
         align-items: center;
         height: 104px;
+        width: 390px;
         text-align: center;
         overflow: hidden;
         & .p-select-col {

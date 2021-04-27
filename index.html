@@ -11,9 +11,12 @@
 </div>
 
 <style>
+    html,body{
+        height: 100%;
+    }
     .screen{
-        height: 288px;
-        width: 912px;
+        width: 100%;
+        height: 100%;
         border: 1px solid #333;
     }
 </style>
@@ -24,7 +27,7 @@
                 {value:1,display:'李四'},
                 {value:2,display:'王二'},
                 {value:3,display:'麻子'},
-                {value:4,display:'顺五'},
+                {value:4,display:'顺五五五五五五五五五五五五五五五五五五五五五五五五五'},
                 {value:5,display:'毛六'},
                 {value:6,display:'周七'}
             ]
@@ -39,7 +42,7 @@
             data:data,
             interactive: true
         },
-        init: function(rs, scrollIns){
+        init: function(scrollIns, rs){
             window.scrollIns = scrollIns
             scrollIns.start(index, {
                 time: 4000
