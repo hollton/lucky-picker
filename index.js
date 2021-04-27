@@ -136,7 +136,7 @@ var LuckyPicker = function LuckyPicker(config, option) {
             width: 456,
             height: 144
         };
-        if (config.autoScale) {
+        if (node && config.autoScale) {
             var scaleWidth = elContainer.clientWidth / wrapBox.width,
                 scaleHeight = elContainer.clientHeight / wrapBox.height;
 
@@ -279,10 +279,8 @@ var LuckyPicker = function LuckyPicker(config, option) {
             result: []
         };
         var wrapDom = document.querySelector('.' + wrapClassName);
-        if (wrapDom) {
-            wrapDom.remove();
-            window.removeEventListener('resize', setScale);
-        }
+        wrapDom && wrapDom.remove();
+        window.removeEventListener('resize', setScale);
     }
 
     this.Scroll = function (el, wheel, index) {
@@ -662,9 +660,6 @@ var LuckyPicker = function LuckyPicker(config, option) {
         option.init(scroll, rs);
         var wrapDom = document.querySelector('.' + wrapClassName);
         wrapDom.addEventListener('touchmove', function (e) {
-            e.preventDefault();
-        }, false);
-        wrapDom.addEventListener('resize', function (e) {
             e.preventDefault();
         }, false);
         window.addEventListener('resize', function () {
