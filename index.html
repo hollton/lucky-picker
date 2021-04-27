@@ -10,6 +10,13 @@
 <div class="screen">
 </div>
 
+<style>
+    .screen{
+        height: 288px;
+        width: 912px;
+        border: 1px solid #333;
+    }
+</style>
 <script src="index.js"></script>
 <script>
     var data = [
@@ -20,18 +27,18 @@
                 {value:4,display:'顺五'},
                 {value:5,display:'毛六'},
                 {value:6,display:'周七'}
-
             ]
     const index = Math.random() * data.length >> 0;
     new LuckyPicker({
-        el: '.screen'
+        el: '.screen',
+        autoScale: true
     },{
-        wheels: [{
+        wheel: {
             infinite: true,
             selected: 0,
             data:data,
             interactive: true
-        }],
+        },
         init: function(rs, scrollIns){
             window.scrollIns = scrollIns
             scrollIns.start(index, {
