@@ -5,34 +5,24 @@ import './js/tween'
 import './js/animation'
 import './css/index.less'
 
- function extend() {
-    var name, options, copy;
-    var length = arguments.length;
-    var target = arguments[0];
-    for (var i = 1; i < length; i++) {
-        options = arguments[i];
-        if (options != null) {
-            for (name in options) {
-                copy = options[name];
-                if (copy !== undefined) {
-                    target[name] = copy;
-                }
-            }
-        }
-    }
-    return target;
-}
-
 var LuckyPicker = function (config, option) {
     var elContainer = typeof config.el === 'string' ? document.querySelector(config.el) : config.el;
+    if(!elContainer) {
+        throw new Error('can not find required parameter el')
+    }
     var wrapClassName = 'p-scroll-wrap';
     var self = this;
-    var option = extend({
+    option = {
         wheel: {},
         init: function () {},
         getResult: function () {},
-        end: function () {}
-    }, option);
+        end: function () {},
+        ...option
+    }
+    option.wheel = {
+        infinite: true,
+        ...option.wheel
+    }
 
     var rows = 5;
     var itemHeight = 34;
@@ -139,7 +129,6 @@ var LuckyPicker = function (config, option) {
 
         var node = document.createElement("div");
         node.className = wrapClassName;
-        setScale(node)
         node.innerHTML = html;
         elContainer.appendChild(node)
     }
@@ -258,10 +247,11 @@ var LuckyPicker = function (config, option) {
             this.itemClick(this.opt.item3d);
         },
         start: function(index, opt){
-            opt = extend({
+            opt = {
                 time: 5000,
-                animation: 'Quad.easeInOut'
-            }, opt)
+                animation: 'Quad.easeInOut',
+                ...opt
+            }
             var wheelData = this.wheel.data || []
             var self = this
             var targetIndex = wheelData.length * 5 + index
@@ -521,6 +511,7 @@ var LuckyPicker = function (config, option) {
         removeItem: function (valArr) {
             var data = this.opt.data,
                 resultVal = rs.result[this.index].value,
+                removeLen = 0,
                 moveEnd = false;
 
             for (var i = 0; i < data.length; i++) {
@@ -547,31 +538,31 @@ var LuckyPicker = function (config, option) {
             this.opt.dataLen = data.length;
             this.scrollTo(rs.result[this.index].value, 0);
         },
-        appendItem: function (valArr) {
+        appendItem: function (dataArr) {
             var data = this.opt.data;
 
             //去重
             for (var i = 0; i < data.length; i++) {
-                for (var j = 0; j < valArr.length; j++) {
-                    if (data[i].value == valArr[j].value) {
-                        valArr.splice(j--, 1)
+                for (var j = 0; j < dataArr.length; j++) {
+                    if (data[i].value == dataArr[j].value) {
+                        dataArr.splice(j--, 1)
                     }
                 }
             }
 
             //添加
-            for (var i = 0; i < valArr.length; i++) {
-                data.push(valArr[i]);
+            for (var i = 0; i < dataArr.length; i++) {
+                data.push(dataArr[i]);
             }
 
             this.opt.dataLen = data.length;
             this.scrollTo(rs.result[this.index].value, 0);
         },
-        newItem: function (valArr) {
+        newItem: function (dataArr) {
             var data = this.opt.data;
             data.length = 0;
-            for (var i = 0; i < valArr.length; i++) {
-                data.push(valArr[i]);
+            for (var i = 0; i < dataArr.length; i++) {
+                data.push(dataArr[i]);
             }
             this.opt.dataLen = data.length;
             this.scrollTo(rs.result[this.index].value, 0);
@@ -590,6 +581,10 @@ var LuckyPicker = function (config, option) {
         //传出初始结果
         option.init(scroll, rs);
         var wrapDom = document.querySelector('.' + wrapClassName);
+
+        setTimeout(() => {
+            setScale(wrapDom)
+        });
         wrapDom.addEventListener('touchmove', function (e) {
             e.preventDefault()
         }, false);

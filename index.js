@@ -84,43 +84,33 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /**
+                                                                                                                                                                                                                                                                   * lucky-picker
+                                                                                                                                                                                                                                                                   */
+
+
 __webpack_require__(1);
 
 __webpack_require__(2);
 
 __webpack_require__(3);
 
-function extend() {
-    var name, options, copy;
-    var length = arguments.length;
-    var target = arguments[0];
-    for (var i = 1; i < length; i++) {
-        options = arguments[i];
-        if (options != null) {
-            for (name in options) {
-                copy = options[name];
-                if (copy !== undefined) {
-                    target[name] = copy;
-                }
-            }
-        }
-    }
-    return target;
-} /**
-   * lucky-picker
-   */
-
-
 var LuckyPicker = function LuckyPicker(config, option) {
     var elContainer = typeof config.el === 'string' ? document.querySelector(config.el) : config.el;
+    if (!elContainer) {
+        throw new Error('can not find required parameter el');
+    }
     var wrapClassName = 'p-scroll-wrap';
     var self = this;
-    var option = extend({
+    option = _extends({
         wheel: {},
         init: function init() {},
         getResult: function getResult() {},
         end: function end() {}
     }, option);
+    option.wheel = _extends({
+        infinite: true
+    }, option.wheel);
 
     var rows = 5;
     var itemHeight = 34;
@@ -213,7 +203,6 @@ var LuckyPicker = function LuckyPicker(config, option) {
 
         var node = document.createElement("div");
         node.className = wrapClassName;
-        setScale(node);
         node.innerHTML = html;
         elContainer.appendChild(node);
     }
@@ -332,7 +321,7 @@ var LuckyPicker = function LuckyPicker(config, option) {
             this.itemClick(this.opt.item3d);
         },
         start: function start(index, opt) {
-            opt = extend({
+            opt = _extends({
                 time: 5000,
                 animation: 'Quad.easeInOut'
             }, opt);
@@ -600,6 +589,7 @@ var LuckyPicker = function LuckyPicker(config, option) {
         removeItem: function removeItem(valArr) {
             var data = this.opt.data,
                 resultVal = rs.result[this.index].value,
+                removeLen = 0,
                 moveEnd = false;
 
             for (var i = 0; i < data.length; i++) {
@@ -625,31 +615,31 @@ var LuckyPicker = function LuckyPicker(config, option) {
             this.opt.dataLen = data.length;
             this.scrollTo(rs.result[this.index].value, 0);
         },
-        appendItem: function appendItem(valArr) {
+        appendItem: function appendItem(dataArr) {
             var data = this.opt.data;
 
             //去重
             for (var i = 0; i < data.length; i++) {
-                for (var j = 0; j < valArr.length; j++) {
-                    if (data[i].value == valArr[j].value) {
-                        valArr.splice(j--, 1);
+                for (var j = 0; j < dataArr.length; j++) {
+                    if (data[i].value == dataArr[j].value) {
+                        dataArr.splice(j--, 1);
                     }
                 }
             }
 
             //添加
-            for (var i = 0; i < valArr.length; i++) {
-                data.push(valArr[i]);
+            for (var i = 0; i < dataArr.length; i++) {
+                data.push(dataArr[i]);
             }
 
             this.opt.dataLen = data.length;
             this.scrollTo(rs.result[this.index].value, 0);
         },
-        newItem: function newItem(valArr) {
+        newItem: function newItem(dataArr) {
             var data = this.opt.data;
             data.length = 0;
-            for (var i = 0; i < valArr.length; i++) {
-                data.push(valArr[i]);
+            for (var i = 0; i < dataArr.length; i++) {
+                data.push(dataArr[i]);
             }
             this.opt.dataLen = data.length;
             this.scrollTo(rs.result[this.index].value, 0);
@@ -668,6 +658,10 @@ var LuckyPicker = function LuckyPicker(config, option) {
         //传出初始结果
         option.init(scroll, rs);
         var wrapDom = document.querySelector('.' + wrapClassName);
+
+        setTimeout(function () {
+            setScale(wrapDom);
+        });
         wrapDom.addEventListener('touchmove', function (e) {
             e.preventDefault();
         }, false);
