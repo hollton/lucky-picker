@@ -644,6 +644,15 @@ var LuckyPicker = function LuckyPicker(config, option) {
 
             this.opt.dataLen = data.length;
             this.scrollTo(rs.result[this.index].value, 0);
+        },
+        newItem: function newItem(valArr) {
+            var data = this.opt.data;
+            data.length = 0;
+            for (var i = 0; i < valArr.length; i++) {
+                data.push(valArr[i]);
+            }
+            this.opt.dataLen = data.length;
+            this.scrollTo(rs.result[this.index].value, 0);
         }
     };
 
