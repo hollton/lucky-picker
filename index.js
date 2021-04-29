@@ -326,6 +326,10 @@ var LuckyPicker = function LuckyPicker(config, option) {
                 animation: 'Quad.easeInOut'
             }, opt);
             var wheelData = this.wheel.data || [];
+            index = parseInt(index);
+            if (!(index >= 0 && index < wheelData.length)) {
+                index = Math.random() * wheelData.length >> 0;
+            }
             var self = this;
             var targetIndex = wheelData.length * 5 + index;
             if (wheelData.length <= 1) {
