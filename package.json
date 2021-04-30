@@ -1,10 +1,11 @@
 {
   "name": "lucky-picker",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "无限滚动随机选择器",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --progress"
+    "copy:publish": "copyfiles ./index.html ./index.js ./package.json ./README.md ./publish",
+    "build": "webpack --progress --optimize-minimize & npm run copy:publish"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
+    "copyfiles": "^2.4.1",
     "css-loader": "^3.6.0",
     "less": "^4.1.1",
     "less-loader": "^5.0.0",
@@ -34,7 +36,7 @@
   "keywords": [
     "lottery-picker",
     "slotmachine",
-    "无限滚动",
+    "滚动选择器",
     "老虎机"
   ]
 }

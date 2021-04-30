@@ -6,10 +6,10 @@
 
 ## 功能点 Feature
 * 无限滚动
-* 可交互滑动及点击上下滚动
+* 可交互滑动及点击滚动
 * 自定义滚动时间
 * 自定义 Tween.js 滚动动效，详见[Tween.js动画算法使用示意实例](https://www.zhangxinxu.com/study/201612/how-to-use-tween-js.html)
-* 支持自适应缩放及缩放基点位置
+* 支持根据容器自适应缩放及缩放基点位置
 
 ## 效果 Demo
 ### [示例](https://github.com/hollton/lucky-picker/blob/master/index.html)
