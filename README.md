@@ -9,7 +9,7 @@
 * 可交互滑动及点击滚动
 * 自定义滚动时间
 * 自定义 Tween.js 滚动动效，详见[Tween.js动画算法使用示意实例](https://www.zhangxinxu.com/study/201612/how-to-use-tween-js.html)
-* 支持根据容器自适应缩放及缩放基点位置
+* 支持根据容器自适应缩放及设置缩放基点位置
 
 ## 效果 Demo
 ### [示例](https://github.com/hollton/lucky-picker/blob/master/index.html)
@@ -45,7 +45,7 @@ new window.LuckyPicker(config, option)
 
 | 名称       | 说明                 |  类型                                                    | 默认值 |
 | --------- | -------------------- | -------------------------------------------------------- | ---- |
-| wheel     | 数据，必需            | string or Dom                                            | -    |
+| wheel     | 数据，必需            | object                                                   | -    |
 | init      | 初始化完成回调        | function(scrollIns, rs)，scrollIns：组件实例；rs：选中数据 | -    |
 | end       | start方法执行完成回调 | function(rs)，rs：选中数据                                | -    |
 | getResult | 交互执行完成回调      | function(rs)，rs：选中数据，interactive 设置为 true 生效   | -    |
