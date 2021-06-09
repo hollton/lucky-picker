@@ -39,9 +39,11 @@ var LuckyPicker = function (config, option) {
             height: 144
         }
         if(node && config.autoScale) {
-            var [scaleWidth, scaleHeight] = [elContainer.clientWidth / wrapBox.width, elContainer.clientHeight / wrapBox.height];
-            var scaleSize = scaleWidth < scaleHeight ? scaleWidth : scaleHeight || 1;
-            node.style['transform'] = 'scale(' + scaleSize + ')';
+            var scaleSizeHeight = elContainer.clientHeight / wrapBox.height;
+            if(scaleSizeHeight > 1 || scaleSizeHeight <= 0) {
+                scaleSizeHeight = 1
+            };
+            node.style['transform'] = 'scale(1, ' + scaleSizeHeight + ')';
             if(config.scaleOrigin) {
                 node.style['transform-origin'] = config.scaleOrigin
             }
