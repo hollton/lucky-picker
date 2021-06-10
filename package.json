@@ -1,11 +1,12 @@
 {
   "name": "lucky-picker",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "无限滚动随机选择器",
   "main": "index.js",
   "scripts": {
     "copy:publish": "copyfiles ./index.html ./index.js ./package.json ./README.md ./publish",
-    "build": "webpack --progress --optimize-minimize & npm run copy:publish"
+    "build": "webpack --progress --optimize-minimize & npm run copy:publish",
+    "publish": "cd publish && npm publish"
   },
   "repository": {
     "type": "git",
