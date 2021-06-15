@@ -1,6 +1,6 @@
 {
   "name": "lucky-picker",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "无限滚动随机选择器",
   "main": "index.js",
   "scripts": {

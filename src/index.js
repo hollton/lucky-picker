@@ -597,15 +597,7 @@ var LuckyPicker = function (_config = {}, _option = {}) {
         destroy()
         //创建DOM
         createEl(wheel);
-        var el = document.querySelector(".p-select-item");
-        var scroll = new self.Scroll(el, wheel, 0);
-        //初始结果
-        var res = getVal(scroll.opt.scrollY, scroll.opt.data, scroll.opt.infinite, scroll.opt.selectedIdx);
-        rs.result.push(res);
-        //传出初始结果
-        option.init(scroll, rs);
         var wrapDom = document.querySelector('.' + wrapClassName);
-
         setTimeout(() => {
             setScale(wrapDom)
         });
@@ -615,9 +607,17 @@ var LuckyPicker = function (_config = {}, _option = {}) {
         window.addEventListener('resize', function(){
             setScale(wrapDom)
         })
+        var el = document.querySelector(".p-select-item");
+        var scroll = new self.Scroll(el, wheel, 0);
+        //初始结果
+        var res = getVal(scroll.opt.scrollY, scroll.opt.data, scroll.opt.infinite, scroll.opt.selectedIdx);
+        rs.result.push(res);
+        //传出初始结果
+        option.init(scroll, rs);
+        return scroll;
     }
 
-    init(option.wheel)
+    return init(option.wheel)
 };
 
 export default LuckyPicker;
