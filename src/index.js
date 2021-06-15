@@ -5,25 +5,43 @@ import './js/tween'
 import './js/animation'
 import './css/index.less'
 
-var LuckyPicker = function (config, option) {
-    var elContainer = typeof config.el === 'string' ? document.querySelector(config.el) : config.el;
-    if(!elContainer) {
-        throw new Error('can not find required parameter el')
+var deepClone = function (obj, newObj = []) {
+    for (let key in obj) {
+        if (typeof obj[key] == 'object') {
+            newObj[key] = (obj[key].constructor === Array) ? [] : {}
+            deepClone(obj[key], newObj[key]);
+        } else {
+            newObj[key] = obj[key]
+        }
     }
-    var wrapClassName = 'p-scroll-wrap';
-    var self = this;
-    option = {
-        wheel: {},
+    return newObj;
+}
+
+var LuckyPicker = function (_config = {}, _option = {}) {
+    var elContainer = typeof _config.el === 'string' ? document.querySelector(_config.el) : _config.el;
+    if(!elContainer) {
+        console.error('can not find required parameter el')
+        return null
+    }
+    const {wheel = {}, ...restOption} = _option
+    const {data = [], ...restWheel} = wheel
+    if(!data.length) {
+        console.error('can not find required parameter wheel.data')
+        return null
+    }
+    let option = {
+        wheel: {
+            infinite: true,
+            ...restWheel,
+            data: deepClone(data)
+        },
         init: function () {},
         getResult: function () {},
         end: function () {},
-        ...option
+        ...restOption
     }
-    option.wheel = {
-        infinite: true,
-        ...option.wheel
-    }
-
+    var wrapClassName = 'p-scroll-wrap';
+    var self = this;
     var rows = 5;
     var itemHeight = 34;
     var itemSize2d = 9;
@@ -38,14 +56,14 @@ var LuckyPicker = function (config, option) {
             width: 456,
             height: 144
         }
-        if(node && config.autoScale) {
+        if(node && _config.autoScale) {
             var scaleSizeHeight = elContainer.clientHeight / wrapBox.height;
             if(scaleSizeHeight > 1 || scaleSizeHeight <= 0) {
                 scaleSizeHeight = 1
             };
             node.style['transform'] = 'scale(1, ' + scaleSizeHeight + ')';
-            if(config.scaleOrigin) {
-                node.style['transform-origin'] = config.scaleOrigin
+            if(_config.scaleOrigin) {
+                node.style['transform-origin'] = _config.scaleOrigin
             }
         }
     }
