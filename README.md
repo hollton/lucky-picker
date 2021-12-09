@@ -1,6 +1,9 @@
 # lucky-picker
-[![npm](https://img.shields.io/npm/v/lucky-picker.svg)](https://www.npmjs.com/package/lucky-picker) 
-[![LICENSE MIT](https://img.shields.io/npm/l/lucky-picker.svg)](https://www.npmjs.com/package/lucky-picker) 
+
+![](https://flat.badgen.net/npm/v/lucky-picker)
+![](https://flat.badgen.net/bundlephobia/minzip/lucky-picker)
+![](https://flat.badgen.net/npm/license/lucky-picker)
+![](https://flat.badgen.net/npm/dt/lucky-picker)
 
 无限滚动随机选择器
 
