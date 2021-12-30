@@ -9,18 +9,25 @@
 
 <div class="screen">
     <div class="box"></div>
-    <button onclick="start()">start</button>
+    <button onclick="start()" class="button">start</button>
 </div>
 
 <style>
+    * {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
     .screen{
         text-align: center;
     }
-    /* .box{
-        width: 410px;
-        height: 130px;
+    .box{
+        height: calc(100% - 24px);
         margin: 0 auto;
-    } */
+    }
+    .button{
+        height: 22px
+    }
 </style>
 <script src="index.js"></script>
 <script>

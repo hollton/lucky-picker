@@ -51,17 +51,18 @@ var LuckyPicker = function (_config = {}, _option = {}) {
         result: []
     };
 
+    // 缩放比例（width >=1，height > 0）
     function setScale(node){
         var wrapBox = {
             width: 456,
             height: 144
         }
         if(node && _config.autoScale) {
-            var scaleSizeHeight = elContainer.clientHeight / wrapBox.height;
-            if(scaleSizeHeight > 1 || scaleSizeHeight <= 0) {
-                scaleSizeHeight = 1
-            };
-            node.style['transform'] = 'scale(1, ' + scaleSizeHeight + ')';
+            var [scaleWidth, scaleHeight] = [elContainer.clientWidth / wrapBox.width, elContainer.clientHeight / wrapBox.height];
+            var scaleWidthSize = Math.max(Math.min(scaleWidth, scaleHeight), 1);
+            var scaleMinSize = Math.min(scaleWidthSize, scaleHeight)
+            var scaleHeightSize = scaleMinSize >= 1 ? scaleMinSize : scaleHeight;
+            node.style['transform'] = `scale(${scaleWidthSize}, ${scaleHeightSize})`;
             if(_config.scaleOrigin) {
                 node.style['transform-origin'] = _config.scaleOrigin
             }

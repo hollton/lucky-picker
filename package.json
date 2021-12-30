@@ -1,6 +1,6 @@
 {
   "name": "lucky-picker",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "无限滚动随机选择器",
   "main": "index.js",
   "scripts": {
@@ -37,7 +37,6 @@
   "keywords": [
     "lottery-picker",
     "slotmachine",
-    "滚动选择器",
-    "老虎机"
+    "滚动选择器"
   ]
 }
