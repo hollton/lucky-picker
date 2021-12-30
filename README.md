@@ -15,7 +15,7 @@
 * 支持根据容器自适应缩放及设置缩放基点位置
 
 ## 效果 Demo
-### [示例](https://github.com/hollton/lucky-picker/blob/master/index.html)
+### [示例](https://codesandbox.io/s/rc-lucky-picker-lcrwq)
 ### ![demo](https://github.com/hollton/lucky-picker/blob/master/assets/demo.png)
 
 ## 使用 Usage
